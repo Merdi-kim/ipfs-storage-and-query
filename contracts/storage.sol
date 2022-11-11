@@ -3,12 +3,12 @@ pragma solidity ^0.8.9;
 
 contract Storage {
 
-    struct FileMetadata {
-        string uri;
-        bool flagged;
-    }
+  struct FileMetadata {
+    string uri;
+    bool flagged;
+  }
 
-   mapping(string => FileMetadata) data;
+  mapping(string => FileMetadata) data;
   
   event NewItemToStore(string uri);
   event ItemToFlag(string uri);

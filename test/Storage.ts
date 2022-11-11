@@ -12,13 +12,16 @@ describe("Storage", function () {
     const Storage = await ethers.getContractFactory("Storage");
     const storage = await Storage.deploy();
     await storage.deployed()
-    return {owner, otherAccount, address:storage.address};
+    return {owner, otherAccount, storage};
   }
 
-  it('should deploy contract and make sure contract address is not empty address', async() => {
-    const {owner,otherAccount,address} = await deployStorageContract()
-    expect(address).not.equals(ethers.constants.AddressZero)
+  it('should add data to storage', async() => {
+    const uri = 'hhhhhhhh'
+    const {owner,otherAccount, storage} = await deployStorageContract()
+    const tx = await storage.storeData(uri)
+    const transaction = await tx.wait()
+    const args = transaction.events![0]
+    expect(args.args![0]).to.equal(uri)
   })
-
   
 });
