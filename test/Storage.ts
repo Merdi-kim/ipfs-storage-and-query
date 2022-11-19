@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import { isAddress } from "ethers/lib/utils";
 import { ethers } from "hardhat";
+import {Web3Storage} from 'web3.storage'
 
 describe("Storage", function () {
 
@@ -15,13 +15,16 @@ describe("Storage", function () {
     return {owner, otherAccount, storage};
   }
 
-  it('should add data to storage', async() => {
-    const uri = 'hhhhhhhh'
+  it('should add data to storage or fail', async() => {
+    const storageClient = new Web3Storage({ token: process.env.STORAGE_TOKEN! })
+    const obj = { word: 'storage testing' }
+    const blob = new Blob([JSON.stringify(obj)], { type: 'application/json' })
+    const cid = await storageClient.put([new File([blob], 'hello.json')])
     const {owner,otherAccount, storage} = await deployStorageContract()
-    const tx = await storage.storeData(uri)
+    const tx = await storage.storeData(cid.trim())
     const transaction = await tx.wait()
     const args = transaction.events![0]
-    expect(args.args![0]).to.equal(uri)
+    expect(args.args![0]).to.equal(true)
   })
   
 });

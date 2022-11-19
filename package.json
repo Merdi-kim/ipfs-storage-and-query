@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "type":"module",
+  "scripts": {
+    "deploy":"node index.js deploy"
+  },
   "dependencies": {
+    "commander": "^9.4.1",
     "hardhat": "^2.12.2"
   },
   "devDependencies": {

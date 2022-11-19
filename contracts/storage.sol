@@ -2,28 +2,20 @@
 pragma solidity ^0.8.9;
 
 contract Storage {
-
-  struct FileMetadata {
-    string uri;
-    bool flagged;
-  }
-
-  mapping(string => FileMetadata) data;
-  
-  event NewItemToStore(string uri);
+  event NewItemToStore(bool uri);
   event ItemToFlag(string uri);
+
+  error EmptyString();
 
   // add new file
   function storeData(string memory uri) public {
-    data[uri] = FileMetadata(uri, false);
-    emit NewItemToStore(uri);
+    bool dis = (keccak256(abi.encodePacked(uri)) != keccak256(abi.encodePacked('')));
+    emit NewItemToStore(dis);
   }
 
   // set file not to be fetched 
   function flagData(string memory uri) public {
-    FileMetadata memory dataToFlag = data[uri];
-    dataToFlag.flagged = true;
-    emit ItemToFlag(dataToFlag.uri);
+    //TO DO
   }
 
 }

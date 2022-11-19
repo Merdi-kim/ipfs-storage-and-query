@@ -1,4 +1,5 @@
-import { ethers } from "hardhat";
+import pkg from "hardhat";
+const { ethers } = pkg
 
 async function deployContract() {
   const Storage = await ethers.getContractFactory("Storage");
@@ -12,4 +13,5 @@ deployContract().catch((error) => {
   process.exitCode = 1;
 });
 
+export default deployContract
 
